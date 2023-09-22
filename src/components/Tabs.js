@@ -7,7 +7,7 @@ import City from "../screens/City";
 
 const Tab = createBottomTabNavigator();
 
-export default function Tabs() {
+export default function Tabs({ weather }) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -38,7 +38,9 @@ export default function Tabs() {
             />
           ),
         }}
-      />
+      >
+        {() => <CurrentWeather weatherData={weather.list[0]} />}
+      </Tab.Screen>
       <Tab.Screen
         name={"Upcoming"}
         component={UpcomingWeather}

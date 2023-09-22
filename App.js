@@ -1,66 +1,36 @@
-// import { StatusBar } from "expo-status-bar";
-// import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-// import { Feather } from "@expo/vector-icons";
-// import CurrentWeather from "./src/screens/CurrentWeather";
-// import UpcomingWeather from "./src/screens/UpcomingWeather";
-// import City from "./src/screens/City";
-// React Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import Tabs from "./src/components/Tabs";
-// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-// const Tab = createBottomTabNavigator();
+import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { useGetWeather } from "./src/hooks/useGetWeather";
 
 export default function App() {
+  const [loading, errorMsg, weather] = useGetWeather();
+  console.log(loading, errorMsg, weather);
+
+  if (weather && weather.list) {
+    return (
+      <NavigationContainer>
+        <Tabs weather={weather} />
+      </NavigationContainer>
+    );
+  }
+
+  // if (weather) {
+  //   console.log(weather);
+  // }
+
+  // if (loading) {
   return (
-    <NavigationContainer>
-      <Tabs />
-      {/* <Tab.Navigator
-        screenOptions={{
-          tabBarActiveTintColor: "blue",
-          tabBarInactiveTintColor: "grey",
-        }}
-      >
-        <Tab.Screen
-          name={"Current"}
-          component={CurrentWeather}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Feather
-                name={"droplet"}
-                size={25}
-                color={focused ? "blue" : "black"}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name={"Upcoming"}
-          component={UpcomingWeather}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Feather
-                name={"clock"}
-                size={25}
-                color={focused ? "blue" : "black"}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name={"City"}
-          component={City}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Feather
-                name={"home"}
-                size={25}
-                color={focused ? "blue" : "black"}
-              />
-            ),
-          }}
-        />
-      </Tab.Navigator> */}
-    </NavigationContainer>
+    <View style={styles.container}>
+      <ActivityIndicator size={"large"} color={"blue"} />
+    </View>
   );
+  // }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    flex: 1,
+  },
+});

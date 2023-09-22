@@ -1,9 +1,10 @@
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import RowText from "../components/RowText";
+import { weatherType } from "../utilities/WeatherType";
 
-export default function CurrentWeather() {
+export default function CurrentWeather({ weatherData }) {
   const {
     wrapper,
     container,
@@ -15,6 +16,7 @@ export default function CurrentWeather() {
     description,
     message,
   } = styles;
+  console.log(weatherData);
   return (
     <SafeAreaView style={wrapper}>
       <View style={container}>
@@ -33,10 +35,17 @@ export default function CurrentWeather() {
           messageTwoStyles={highLow}
         />
       </View>
-      <View style={bodyWrapper}>
+      {/* <View style={bodyWrapper}>
         <Text style={description}>Its Sunny</Text>
         <Text style={message}>Its pefect t-shirt weather</Text>
-      </View>
+      </View> */}
+      <RowText
+        messageOne={"Its sunny"}
+        messageTwo={weatherType["Thunderstorm"].message}
+        messageOneStyles={description}
+        messageTwoStyles={message}
+        containerStyles={bodyWrapper}
+      />
     </SafeAreaView>
   );
 }
